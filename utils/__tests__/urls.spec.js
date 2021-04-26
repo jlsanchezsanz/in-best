@@ -1,4 +1,4 @@
-import { getCompaniesUrl, getCompanyAnnualRevenueUrl } from '../urls';
+import { getCompaniesUrl, getCompanyAnnualRevenueUrl, getCompanyAnnualEPSUrl } from '../urls';
 
 describe('Urls utils', () => {
   describe('getCompaniesUrl', () => {
@@ -16,6 +16,18 @@ describe('Urls utils', () => {
       const result = getCompanyAnnualRevenueUrl(company);
 
       expect(result).toBe('https://www.macrotrends.net/stocks/charts/AAPL/apple/revenue');
+    });
+  });
+
+  describe('getCompanyAnnualEPSUrl', () => {
+    it('should return EPS url', () => {
+      const company = { n: 'AAPL - Apple', s: 'AAPL/apple' };
+
+      const result = getCompanyAnnualEPSUrl(company);
+
+      expect(result).toBe(
+        'https://www.macrotrends.net/stocks/charts/AAPL/apple/eps-earnings-per-share-diluted'
+      );
     });
   });
 });

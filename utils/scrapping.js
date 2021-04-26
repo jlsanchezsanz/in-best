@@ -17,3 +17,22 @@ export const scrapRevenue = (data, years) => {
 
   return annualRevenue;
 };
+
+export const scrapEPS = (data, years) => {
+  const $ = cheerio.load(data);
+  const annualEPSTable = $('.historical_data_table').first();
+  const annualEPSTableRows = annualEPSTable.children('tbody').children().slice(0, years);
+
+  let annualEPS = {};
+
+  annualEPSTableRows.each((_, el) => {
+    const year = $(el).children().first().text();
+    const value = toNumber($(el).children().last().text());
+
+    if (!isNaN(value)) {
+      annualEPS = { ...annualEPS, [year]: value };
+    }
+  });
+
+  return annualEPS;
+};
