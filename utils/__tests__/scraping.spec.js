@@ -1,7 +1,7 @@
-import { scrapRevenue, scrapEPS } from '../scrapping';
+import { scrapeFreeCashFlow, scrapeRevenue, scrapeEPS } from '../scraping';
 
-describe('Scrapping utils', () => {
-  describe('scrapRevenue', () => {
+describe('scraping utils', () => {
+  describe('scrapeRevenue', () => {
     const data = `
     <table class="historical_data_table table">
       <tbody>
@@ -33,13 +33,13 @@ describe('Scrapping utils', () => {
         2019: 260174,
         2020: 274515,
       };
-      const result = scrapRevenue(data, 10);
+      const result = scrapeRevenue(data, 10);
 
       expect(result).toEqual(expectedRevenue);
     });
   });
 
-  describe('scrapEPS', () => {
+  describe('scrapeEPS', () => {
     const data = `
       <table class="historical_data_table table">					
         <tbody>      
@@ -76,9 +76,51 @@ describe('Scrapping utils', () => {
         2012: 1.58,
         2011: 0.99,
       };
-      const result = scrapEPS(data, 10);
+      const result = scrapeEPS(data, 10);
 
       expect(result).toEqual(expectedEPS);
+    });
+  });
+
+  describe('scrapeFreeCashFlow', () => {
+    const data = `
+      <table class="historical_data_table table">
+        <tbody>
+          <tr><td>2020</td><td>73,365.00</td></tr>
+          <tr><td>2019</td><td>58,896.00</td></tr>
+          <tr><td>2018</td><td>64,121.00</td></tr>
+          <tr><td>2017</td><td>51,774.00</td></tr>
+          <tr><td>2016</td><td>53,497.00</td></tr>
+          <tr><td>2015</td><td>70,019.00</td></tr>
+          <tr><td>2014</td><td>50,142.00</td></tr>
+          <tr><td>2013</td><td>45,501.00</td></tr>
+          <tr><td>2012</td><td>42,561.00</td></tr>
+          <tr><td>2011</td><td>33,269.00</td></tr>
+          <tr><td>2010</td><td>16,590.00</td></tr>
+          <tr><td>2009</td><td>9,015.00</td></tr>
+          <tr><td>2008</td><td>8,505.00</td></tr>
+          <tr><td>2007</td><td>4,735.00</td></tr>
+          <tr><td>2006</td><td>1,563.00</td></tr>
+          <tr><td>2005</td><td>2,275.00</td></tr>
+      </table>  
+    `;
+
+    it('should return Book Value Per Share object', () => {
+      const expectedFreeCashFlow = {
+        2020: 73365,
+        2019: 58896,
+        2018: 64121,
+        2017: 51774,
+        2016: 53497,
+        2015: 70019,
+        2014: 50142,
+        2013: 45501,
+        2012: 42561,
+        2011: 33269,
+      };
+      const result = scrapeFreeCashFlow(data, 10);
+
+      expect(result).toEqual(expectedFreeCashFlow);
     });
   });
 });

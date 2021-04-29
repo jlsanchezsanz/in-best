@@ -1,7 +1,12 @@
 import axios from 'axios';
 
-import { getCompaniesUrl, getCompanyAnnualEPSUrl, getCompanyAnnualRevenueUrl } from '../utils/urls';
-import { scrapEPS, scrapRevenue } from '../utils/scrapping';
+import {
+  getCompaniesUrl,
+  getCompanyAnnualEPSUrl,
+  getCompanyAnnualFreeCashFlowUrl,
+  getCompanyAnnualRevenueUrl,
+} from '../utils/urls';
+import { scrapeEPS, scrapeFreeCashFlow, scrapeRevenue } from '../utils/scraping';
 
 export default class CompanyService {
   static async getCompanies() {
@@ -13,7 +18,7 @@ export default class CompanyService {
   static async getCompanyAnnualRevenue(company, years) {
     const { data } = await axios.get(getCompanyAnnualRevenueUrl(company));
 
-    const annualRevenue = scrapRevenue(data, years);
+    const annualRevenue = scrapeRevenue(data, years);
 
     return annualRevenue;
   }
@@ -21,8 +26,16 @@ export default class CompanyService {
   static async getCompanyAnnualEPS(company, years) {
     const { data } = await axios.get(getCompanyAnnualEPSUrl(company));
 
-    const annualEPS = scrapEPS(data, years);
+    const annualEPS = scrapeEPS(data, years);
 
     return annualEPS;
+  }
+
+  static async getCompanyAnnualFreeCashFlow(company, years) {
+    const { data } = await axios.get(getCompanyAnnualFreeCashFlowUrl(company));
+
+    const annualFreeCashFlow = scrapeFreeCashFlow(data, years);
+
+    return annualFreeCashFlow;
   }
 }

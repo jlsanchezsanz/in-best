@@ -1,4 +1,9 @@
-import { getCompaniesUrl, getCompanyAnnualRevenueUrl, getCompanyAnnualEPSUrl } from '../urls';
+import {
+  getCompaniesUrl,
+  getCompanyAnnualFreeCashFlowUrl,
+  getCompanyAnnualRevenueUrl,
+  getCompanyAnnualEPSUrl,
+} from '../urls';
 
 describe('Urls utils', () => {
   describe('getCompaniesUrl', () => {
@@ -28,6 +33,16 @@ describe('Urls utils', () => {
       expect(result).toBe(
         'https://www.macrotrends.net/stocks/charts/AAPL/apple/eps-earnings-per-share-diluted'
       );
+    });
+  });
+
+  describe('getCompanyAnnualFreeCashFlowUrl', () => {
+    it('should return Free Cash Flow url', () => {
+      const company = { n: 'AAPL - Apple', s: 'AAPL/apple' };
+
+      const result = getCompanyAnnualFreeCashFlowUrl(company);
+
+      expect(result).toBe('https://www.macrotrends.net/stocks/charts/AAPL/apple/free-cash-flow');
     });
   });
 });
