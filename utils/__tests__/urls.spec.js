@@ -1,8 +1,9 @@
 import {
   getCompaniesUrl,
+  getCompanyAnnualEPSUrl,
   getCompanyAnnualFreeCashFlowUrl,
   getCompanyAnnualRevenueUrl,
-  getCompanyAnnualEPSUrl,
+  getCompanyAnnualShareHolderEquityUrl,
 } from '../urls';
 
 describe('Urls utils', () => {
@@ -43,6 +44,18 @@ describe('Urls utils', () => {
       const result = getCompanyAnnualFreeCashFlowUrl(company);
 
       expect(result).toBe('https://www.macrotrends.net/stocks/charts/AAPL/apple/free-cash-flow');
+    });
+  });
+
+  describe('getCompanyAnnualShareHolderEquityUrl', () => {
+    it('should return Share Holder Equity url', () => {
+      const company = { n: 'AAPL - Apple', s: 'AAPL/apple' };
+
+      const result = getCompanyAnnualShareHolderEquityUrl(company);
+
+      expect(result).toBe(
+        'https://www.macrotrends.net/stocks/charts/AAPL/apple/total-share-holder-equity'
+      );
     });
   });
 });
