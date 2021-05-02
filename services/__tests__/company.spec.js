@@ -203,4 +203,49 @@ describe('CompanyService', () => {
       expect(result).toEqual(expectedShareHolderEquity);
     });
   });
+
+  describe('getCompanyAnnualSharesOutstanding', () => {
+    const company = { n: 'AAPL - Apple', s: 'AAPL/apple' };
+    const data = `
+      <table class="historical_data_table table">
+        <tbody>
+          <tr><td>2020</td><td>17,528</td></tr>
+          <tr><td>2019</td><td>18,596</td></tr>
+          <tr><td>2018</td><td>20,000</td></tr>
+          <tr><td>2017</td><td>21,007</td></tr>
+          <tr><td>2016</td><td>22,001</td></tr>
+          <tr><td>2015</td><td>23,172</td></tr>
+          <tr><td>2014</td><td>24,491</td></tr>
+          <tr><td>2013</td><td>26,087</td></tr>
+          <tr><td>2012</td><td>26,470</td></tr>
+          <tr><td>2011</td><td>26,226</td></tr>
+          <tr><td>2010</td><td>25,892</td></tr>
+          <tr><td>2009</td><td>25,396</td></tr>
+          <tr><td>2008</td><td>25,260</td></tr>
+          <tr><td>2007</td><td>24,900</td></tr>
+          <tr><td>2006</td><td>24,571</td></tr>
+          <tr><td>2005</td><td>23,993</td></tr>
+        </tbody>
+      </table>  
+    `;
+
+    it('should return Shares Outstanding values for the last given years', async () => {
+      const expectedSharesOutstanding = {
+        2020: 17528,
+        2019: 18596,
+        2018: 20000,
+        2017: 21007,
+        2016: 22001,
+        2015: 23172,
+        2014: 24491,
+        2013: 26087,
+        2012: 26470,
+        2011: 26226,
+      };
+      axios.get.mockResolvedValueOnce({ data });
+      const result = await CompanyService.getCompanyAnnualSharesOutstanding(company, 10);
+
+      expect(result).toEqual(expectedSharesOutstanding);
+    });
+  });
 });

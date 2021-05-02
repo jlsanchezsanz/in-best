@@ -6,6 +6,7 @@ import {
   getCompanyAnnualFreeCashFlowUrl,
   getCompanyAnnualRevenueUrl,
   getCompanyAnnualShareHolderEquityUrl,
+  getCompanyAnnualSharesOutstandingUrl,
 } from '../utils/urls';
 import { scrapeAnnualValue } from '../utils/scraping';
 
@@ -46,5 +47,13 @@ export default class CompanyService {
     const annualShareHolderEquity = scrapeAnnualValue(data, years);
 
     return annualShareHolderEquity;
+  }
+
+  static async getCompanyAnnualSharesOutstanding(company, years) {
+    const { data } = await axios.get(getCompanyAnnualSharesOutstandingUrl(company));
+
+    const annualSharesOutstanding = scrapeAnnualValue(data, years);
+
+    return annualSharesOutstanding;
   }
 }

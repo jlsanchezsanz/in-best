@@ -5,6 +5,7 @@ const REVENUE_SUFFIX = 'revenue';
 const EPS_SUFFIX = 'eps-earnings-per-share-diluted';
 const FREE_CASH_FLOW_SUFFIX = 'free-cash-flow';
 const SHARE_HOLDER_EQUITY_SUFFIX = 'total-share-holder-equity';
+const SHARES_OUTSTANDING_SUFFIX = 'shares-outstanding';
 
 export const getCompaniesUrl = () => `${BASE_URL}/${COMPANIES_URL}`;
 
@@ -19,3 +20,6 @@ export const getCompanyAnnualFreeCashFlowUrl = (company) =>
 
 export const getCompanyAnnualShareHolderEquityUrl = (company) =>
   `${BASE_URL}/${CHARTS_URL}/${company.s}/${SHARE_HOLDER_EQUITY_SUFFIX}`;
+
+export const getCompanyAnnualSharesOutstandingUrl = (company) =>
+  `${BASE_URL}/${CHARTS_URL}/${company.s}/${SHARES_OUTSTANDING_SUFFIX}`;

@@ -4,6 +4,7 @@ import {
   getCompanyAnnualFreeCashFlowUrl,
   getCompanyAnnualRevenueUrl,
   getCompanyAnnualShareHolderEquityUrl,
+  getCompanyAnnualSharesOutstandingUrl,
 } from '../urls';
 
 describe('Urls utils', () => {
@@ -55,6 +56,18 @@ describe('Urls utils', () => {
 
       expect(result).toBe(
         'https://www.macrotrends.net/stocks/charts/AAPL/apple/total-share-holder-equity'
+      );
+    });
+  });
+
+  describe('getCompanyAnnualSharesOutstandingUrl', () => {
+    it('should return Shares Outstanding url', () => {
+      const company = { n: 'AAPL - Apple', s: 'AAPL/apple' };
+
+      const result = getCompanyAnnualSharesOutstandingUrl(company);
+
+      expect(result).toBe(
+        'https://www.macrotrends.net/stocks/charts/AAPL/apple/shares-outstanding'
       );
     });
   });
