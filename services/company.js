@@ -56,4 +56,34 @@ export default class CompanyService {
 
     return annualSharesOutstanding;
   }
+
+  static getCompanyAnnualBVPS(shareHolderEquity, sharesOutstanding) {
+    const annualBVPS = Object.keys(shareHolderEquity).reduce(
+      (acc, year) => ({
+        ...acc,
+        [year]: +(shareHolderEquity[year] / sharesOutstanding[year]).toFixed(2),
+      }),
+      {}
+    );
+
+    return annualBVPS;
+  }
+
+  static async getCompanyAnalysis(company, years) {
+    const revenue = await this.getCompanyAnnualRevenue(company, years);
+    const EPS = await this.getCompanyAnnualEPS(company, years);
+    const freeCashFlow = await this.getCompanyAnnualFreeCashFlow(company, years);
+    const shareHolderEquity = await this.getCompanyAnnualShareHolderEquity(company, years);
+    const sharesOutstanding = await this.getCompanyAnnualSharesOutstanding(company, years);
+    const BVPS = this.getCompanyAnnualBVPS(shareHolderEquity, sharesOutstanding, years);
+
+    return {
+      BVPS,
+      EPS,
+      freeCashFlow,
+      revenue,
+      shareHolderEquity,
+      sharesOutstanding,
+    };
+  }
 }
