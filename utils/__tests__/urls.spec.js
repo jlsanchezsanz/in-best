@@ -5,6 +5,7 @@ import {
   getCompanyAnnualRevenueUrl,
   getCompanyAnnualShareHolderEquityUrl,
   getCompanyAnnualSharesOutstandingUrl,
+  getCompanyAnnualROIUrl,
 } from '../urls';
 
 describe('Urls utils', () => {
@@ -69,6 +70,16 @@ describe('Urls utils', () => {
       expect(result).toBe(
         'https://www.macrotrends.net/stocks/charts/AAPL/apple/shares-outstanding'
       );
+    });
+  });
+
+  describe('getCompanyAnnualROIUrl', () => {
+    it('should return Shares Outstanding url', () => {
+      const company = { n: 'AAPL - Apple', s: 'AAPL/apple' };
+
+      const result = getCompanyAnnualROIUrl(company);
+
+      expect(result).toBe('https://www.macrotrends.net/stocks/charts/AAPL/apple/roi');
     });
   });
 });

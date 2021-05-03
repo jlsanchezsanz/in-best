@@ -20,3 +20,30 @@ export const scrapeAnnualValue = (data, years) => {
 
   return annualValue;
 };
+
+export const scrapeAnnualValueFromQuarterly = (data, years) => {
+  const $ = cheerio.load(data);
+  const table = $('.table').first();
+  const rows = table.children('tbody').children();
+  const currentYear = new Date().getFullYear();
+
+  let annualValue = {};
+
+  rows.each((_, el) => {
+    const date = $(el).children().first().text();
+    const isSeptember = date.includes('-09-');
+
+    if (!isSeptember) {
+      return;
+    }
+
+    const year = date.split('-')[0];
+    const value = toNumber($(el).children().last().text());
+
+    if (!isNaN(value) && currentYear - year <= years) {
+      annualValue = { ...annualValue, [year]: value };
+    }
+  });
+
+  return annualValue;
+};

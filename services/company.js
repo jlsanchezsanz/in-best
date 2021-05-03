@@ -5,10 +5,11 @@ import {
   getCompanyAnnualEPSUrl,
   getCompanyAnnualFreeCashFlowUrl,
   getCompanyAnnualRevenueUrl,
+  getCompanyAnnualROIUrl,
   getCompanyAnnualShareHolderEquityUrl,
   getCompanyAnnualSharesOutstandingUrl,
 } from '../utils/urls';
-import { scrapeAnnualValue } from '../utils/scraping';
+import { scrapeAnnualValue, scrapeAnnualValueFromQuarterly } from '../utils/scraping';
 
 export default class CompanyService {
   static async getCompanies() {
@@ -69,6 +70,14 @@ export default class CompanyService {
     return annualBVPS;
   }
 
+  static async getCompanyAnnualROI(company, years) {
+    const { data } = await axios.get(getCompanyAnnualROIUrl(company));
+
+    const annualSharesOutstanding = scrapeAnnualValueFromQuarterly(data, years);
+
+    return annualSharesOutstanding;
+  }
+
   static async getCompanyAnalysis(company, years) {
     const revenue = await this.getCompanyAnnualRevenue(company, years);
     const EPS = await this.getCompanyAnnualEPS(company, years);
@@ -76,14 +85,14 @@ export default class CompanyService {
     const shareHolderEquity = await this.getCompanyAnnualShareHolderEquity(company, years);
     const sharesOutstanding = await this.getCompanyAnnualSharesOutstanding(company, years);
     const BVPS = this.getCompanyAnnualBVPS(shareHolderEquity, sharesOutstanding, years);
+    const ROI = await this.getCompanyAnnualROI(company, years);
 
     return {
       BVPS,
       EPS,
       freeCashFlow,
       revenue,
-      shareHolderEquity,
-      sharesOutstanding,
+      ROI,
     };
   }
 }

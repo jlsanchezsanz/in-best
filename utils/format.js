@@ -1,1 +1,1 @@
-export const toNumber = (str) => +str.replace(/[$,]/g, '');
+export const toNumber = (str) => +str.replace(/[$,%]/g, '');
