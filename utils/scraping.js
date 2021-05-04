@@ -2,10 +2,10 @@ import cheerio from 'cheerio';
 
 import { toNumber } from './format';
 
-export const scrapeAnnualValue = (data, years) => {
+export const scrapeAnnualValue = (data) => {
   const $ = cheerio.load(data);
   const table = $('.historical_data_table').first();
-  const rows = table.children('tbody').children().slice(0, years);
+  const rows = table.children('tbody').children();
 
   let annualValue = {};
 
@@ -21,11 +21,10 @@ export const scrapeAnnualValue = (data, years) => {
   return annualValue;
 };
 
-export const scrapeAnnualValueFromQuarterly = (data, years) => {
+export const scrapeAnnualValueFromQuarterly = (data) => {
   const $ = cheerio.load(data);
   const table = $('.table').first();
   const rows = table.children('tbody').children();
-  const currentYear = new Date().getFullYear();
 
   let annualValue = {};
 
@@ -40,7 +39,7 @@ export const scrapeAnnualValueFromQuarterly = (data, years) => {
     const year = date.split('-')[0];
     const value = toNumber($(el).children().last().text());
 
-    if (!isNaN(value) && currentYear - year <= years) {
+    if (!isNaN(value)) {
       annualValue = { ...annualValue, [year]: value };
     }
   });

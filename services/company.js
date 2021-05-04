@@ -18,42 +18,42 @@ export default class CompanyService {
     return data;
   }
 
-  static async getCompanyAnnualRevenue(company, years) {
+  static async getCompanyAnnualRevenue(company) {
     const { data } = await axios.get(getCompanyAnnualRevenueUrl(company));
 
-    const annualRevenue = scrapeAnnualValue(data, years);
+    const annualRevenue = scrapeAnnualValue(data);
 
     return annualRevenue;
   }
 
-  static async getCompanyAnnualEPS(company, years) {
+  static async getCompanyAnnualEPS(company) {
     const { data } = await axios.get(getCompanyAnnualEPSUrl(company));
 
-    const annualEPS = scrapeAnnualValue(data, years);
+    const annualEPS = scrapeAnnualValue(data);
 
     return annualEPS;
   }
 
-  static async getCompanyAnnualFreeCashFlow(company, years) {
+  static async getCompanyAnnualFreeCashFlow(company) {
     const { data } = await axios.get(getCompanyAnnualFreeCashFlowUrl(company));
 
-    const annualFreeCashFlow = scrapeAnnualValue(data, years);
+    const annualFreeCashFlow = scrapeAnnualValue(data);
 
     return annualFreeCashFlow;
   }
 
-  static async getCompanyAnnualShareHolderEquity(company, years) {
+  static async getCompanyAnnualShareHolderEquity(company) {
     const { data } = await axios.get(getCompanyAnnualShareHolderEquityUrl(company));
 
-    const annualShareHolderEquity = scrapeAnnualValue(data, years);
+    const annualShareHolderEquity = scrapeAnnualValue(data);
 
     return annualShareHolderEquity;
   }
 
-  static async getCompanyAnnualSharesOutstanding(company, years) {
+  static async getCompanyAnnualSharesOutstanding(company) {
     const { data } = await axios.get(getCompanyAnnualSharesOutstandingUrl(company));
 
-    const annualSharesOutstanding = scrapeAnnualValue(data, years);
+    const annualSharesOutstanding = scrapeAnnualValue(data);
 
     return annualSharesOutstanding;
   }
@@ -70,22 +70,22 @@ export default class CompanyService {
     return annualBVPS;
   }
 
-  static async getCompanyAnnualROI(company, years) {
+  static async getCompanyAnnualROI(company) {
     const { data } = await axios.get(getCompanyAnnualROIUrl(company));
 
-    const annualSharesOutstanding = scrapeAnnualValueFromQuarterly(data, years);
+    const annualSharesOutstanding = scrapeAnnualValueFromQuarterly(data);
 
     return annualSharesOutstanding;
   }
 
-  static async getCompanyAnalysis(company, years) {
-    const revenue = await this.getCompanyAnnualRevenue(company, years);
-    const EPS = await this.getCompanyAnnualEPS(company, years);
-    const freeCashFlow = await this.getCompanyAnnualFreeCashFlow(company, years);
-    const shareHolderEquity = await this.getCompanyAnnualShareHolderEquity(company, years);
-    const sharesOutstanding = await this.getCompanyAnnualSharesOutstanding(company, years);
-    const BVPS = this.getCompanyAnnualBVPS(shareHolderEquity, sharesOutstanding, years);
-    const ROI = await this.getCompanyAnnualROI(company, years);
+  static async getCompanyAnalysis(company) {
+    const revenue = await this.getCompanyAnnualRevenue(company);
+    const EPS = await this.getCompanyAnnualEPS(company);
+    const freeCashFlow = await this.getCompanyAnnualFreeCashFlow(company);
+    const shareHolderEquity = await this.getCompanyAnnualShareHolderEquity(company);
+    const sharesOutstanding = await this.getCompanyAnnualSharesOutstanding(company);
+    const BVPS = this.getCompanyAnnualBVPS(shareHolderEquity, sharesOutstanding);
+    const ROI = await this.getCompanyAnnualROI(company);
 
     return {
       BVPS,

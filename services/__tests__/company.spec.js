@@ -51,52 +51,52 @@ describe('CompanyService', () => {
   });
 
   describe('getCompanyAnnualRevenue', () => {
-    it('should return revenue values for the last given years', async () => {
+    it('should return annual revenue values', async () => {
       axios.get.mockResolvedValueOnce({ data: dataRevenue });
-      const result = await CompanyService.getCompanyAnnualRevenue(companies[0], 10);
+      const result = await CompanyService.getCompanyAnnualRevenue(companies[0]);
 
       expect(result).toEqual(revenue);
     });
   });
 
   describe('getCompanyAnnualEPS', () => {
-    it('should return EPS values for the last given years', async () => {
+    it('should return annual EPS values', async () => {
       axios.get.mockResolvedValueOnce({ data: dataEPS });
-      const result = await CompanyService.getCompanyAnnualEPS(companies[0], 10);
+      const result = await CompanyService.getCompanyAnnualEPS(companies[0]);
 
       expect(result).toEqual(EPS);
     });
   });
 
   describe('getCompanyAnnualFreeCashFlow', () => {
-    it('should return Free Cash Flow values for the last given years', async () => {
+    it('should return annual Free Cash Flow values', async () => {
       axios.get.mockResolvedValueOnce({ data: dataFreeCashFlow });
-      const result = await CompanyService.getCompanyAnnualFreeCashFlow(companies[0], 10);
+      const result = await CompanyService.getCompanyAnnualFreeCashFlow(companies[0]);
 
       expect(result).toEqual(freeCashFlow);
     });
   });
 
   describe('getCompanyAnnualShareHolderEquity', () => {
-    it('should return Share Holder Equity values for the last given years', async () => {
+    it('should return annual Share Holder Equity values', async () => {
       axios.get.mockResolvedValueOnce({ data: dataShareHolderEquity });
-      const result = await CompanyService.getCompanyAnnualShareHolderEquity(companies[0], 10);
+      const result = await CompanyService.getCompanyAnnualShareHolderEquity(companies[0]);
 
       expect(result).toEqual(shareHolderEquity);
     });
   });
 
   describe('getCompanyAnnualSharesOutstanding', () => {
-    it('should return Shares Outstanding values for the last given years', async () => {
+    it('should return annual Shares Outstanding values', async () => {
       axios.get.mockResolvedValueOnce({ data: dataSharesOutstanding });
-      const result = await CompanyService.getCompanyAnnualSharesOutstanding(companies[0], 10);
+      const result = await CompanyService.getCompanyAnnualSharesOutstanding(companies[0]);
 
       expect(result).toEqual(sharesOutstanding);
     });
   });
 
   describe('getCompanyAnnualBVPS', () => {
-    it('should return Book Value Per Share values for the last given years', async () => {
+    it('should return annual Book Value Per Share values', async () => {
       const result = CompanyService.getCompanyAnnualBVPS(shareHolderEquity, sharesOutstanding);
 
       expect(result).toEqual(BVPS);
@@ -104,9 +104,9 @@ describe('CompanyService', () => {
   });
 
   describe('getCompanyAnnualROI', () => {
-    it('should return ROI values for the last given years', async () => {
+    it('should return annual ROI values', async () => {
       axios.get.mockResolvedValueOnce({ data: dataROI });
-      const result = await CompanyService.getCompanyAnnualROI(companies[0], 10);
+      const result = await CompanyService.getCompanyAnnualROI(companies[0]);
 
       expect(result).toEqual(ROI);
     });
@@ -134,7 +134,7 @@ describe('CompanyService', () => {
       axios.get.mockImplementation((url) => ({
         data: dataMap[url],
       }));
-      const result = await CompanyService.getCompanyAnalysis(company, 10);
+      const result = await CompanyService.getCompanyAnalysis(company);
 
       expect(result).toEqual(expectedCompanyAnalysis);
     });

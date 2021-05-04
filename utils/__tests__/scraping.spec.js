@@ -4,7 +4,7 @@ import { dataRevenue, dataROI, revenue, ROI } from '../../mocks/scrap-data';
 describe('scraping utils', () => {
   describe('scrapeAnnualValue', () => {
     it('should return annual value object', () => {
-      const result = scrapeAnnualValue(dataRevenue, 10);
+      const result = scrapeAnnualValue(dataRevenue);
 
       expect(result).toEqual(revenue);
     });
@@ -12,7 +12,7 @@ describe('scraping utils', () => {
 
   describe('scrapeAnnualValueFromQuarterly', () => {
     it('should return annual value object', () => {
-      const result = scrapeAnnualValueFromQuarterly(dataROI, 10);
+      const result = scrapeAnnualValueFromQuarterly(dataROI);
 
       expect(result).toEqual(ROI);
     });
