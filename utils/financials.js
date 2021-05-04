@@ -16,3 +16,40 @@ export const getAverageGrowthRate = (data, years) => {
 
   return twoDecimalsAverageGrowthRate;
 };
+
+export const getCompanyAverageGrowthRates = (companyData) => {
+  const { BVPS, EPS, freeCashFlow, revenue, ROI } = companyData;
+  const averageGrowthROIRates = {
+    10: getAverageGrowthRate(ROI, 10),
+    5: getAverageGrowthRate(ROI, 5),
+    1: getAverageGrowthRate(ROI, 1),
+  };
+  const averageGrowthRevenueRates = {
+    10: getAverageGrowthRate(revenue, 10),
+    5: getAverageGrowthRate(revenue, 5),
+    1: getAverageGrowthRate(revenue, 1),
+  };
+  const averageGrowthEPSRates = {
+    10: getAverageGrowthRate(EPS, 10),
+    5: getAverageGrowthRate(EPS, 5),
+    1: getAverageGrowthRate(EPS, 1),
+  };
+  const averageGrowthFreeCashFlowRates = {
+    10: getAverageGrowthRate(freeCashFlow, 10),
+    5: getAverageGrowthRate(freeCashFlow, 5),
+    1: getAverageGrowthRate(freeCashFlow, 1),
+  };
+  const averageGrowthBVPSRates = {
+    10: getAverageGrowthRate(BVPS, 10),
+    5: getAverageGrowthRate(BVPS, 5),
+    1: getAverageGrowthRate(BVPS, 1),
+  };
+
+  return {
+    averageGrowthROIRates,
+    averageGrowthRevenueRates,
+    averageGrowthEPSRates,
+    averageGrowthFreeCashFlowRates,
+    averageGrowthBVPSRates,
+  };
+};

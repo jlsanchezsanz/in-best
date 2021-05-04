@@ -151,7 +151,6 @@ export const dataROI = `
     <tr><td>2011-09-30</td><td>$33.79B</td><td></td><td>inf%</td></tr>
     <tr><td>2011-06-30</td><td>$30.53B</td><td></td><td>inf%</td></tr>
     <tr><td>2011-03-31</td><td>$25.38B</td><td></td><td>inf%</td></tr>
-    <tr><td>2010-09-30</td><td>$49.91B</td><td>$140.31B</td><td>142.29%</td></tr>
   </tbody>
 </table>
 `;
@@ -292,5 +291,4 @@ export const ROI = {
   2015: 42.48,
   2014: 36.57,
   2013: 69.79,
-  2010: 142.29,
 };

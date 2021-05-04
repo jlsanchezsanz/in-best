@@ -10,6 +10,7 @@ import {
   getCompanyAnnualSharesOutstandingUrl,
 } from '../utils/urls';
 import { scrapeAnnualValue, scrapeAnnualValueFromQuarterly } from '../utils/scraping';
+import { getCompanyAverageGrowthRates } from '../utils/financials';
 
 export default class CompanyService {
   static async getCompanies() {
@@ -86,13 +87,12 @@ export default class CompanyService {
     const sharesOutstanding = await this.getCompanyAnnualSharesOutstanding(company);
     const BVPS = this.getCompanyAnnualBVPS(shareHolderEquity, sharesOutstanding);
     const ROI = await this.getCompanyAnnualROI(company);
+    const companyData = { BVPS, EPS, freeCashFlow, revenue, ROI };
+    const companyAverageGrowthRates = getCompanyAverageGrowthRates(companyData);
 
     return {
-      BVPS,
-      EPS,
-      freeCashFlow,
-      revenue,
-      ROI,
+      ...companyAverageGrowthRates,
+      ...companyData,
     };
   }
 }
