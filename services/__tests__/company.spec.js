@@ -133,6 +133,7 @@ describe('CompanyService', () => {
       averageGrowthEPSRates: { 10: 12.73, 5: 9.54, 1: 10.44 },
       averageGrowthFreeCashFlowRates: { 10: 8.23, 5: 6.52, 1: 24.57 },
       averageGrowthBVPSRates: { 10: 2.48, 5: -8.54, 1: -23.41 },
+      score: 78.05,
     };
 
     it('should return company analysis', async () => {

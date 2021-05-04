@@ -10,7 +10,7 @@ import {
   getCompanyAnnualSharesOutstandingUrl,
 } from '../utils/urls';
 import { scrapeAnnualValue, scrapeAnnualValueFromQuarterly } from '../utils/scraping';
-import { getCompanyAverageGrowthRates } from '../utils/financials';
+import { getCompanyAverageGrowthRates, getCompanyScore } from '../utils/financials';
 
 export default class CompanyService {
   static async getCompanies() {
@@ -89,8 +89,10 @@ export default class CompanyService {
     const ROI = await this.getCompanyAnnualROI(company);
     const companyData = { BVPS, EPS, freeCashFlow, revenue, ROI };
     const companyAverageGrowthRates = getCompanyAverageGrowthRates(companyData);
+    const score = getCompanyScore(companyAverageGrowthRates);
 
     return {
+      score,
       ...companyAverageGrowthRates,
       ...companyData,
     };

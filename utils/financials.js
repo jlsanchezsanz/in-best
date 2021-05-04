@@ -53,3 +53,16 @@ export const getCompanyAverageGrowthRates = (companyData) => {
     averageGrowthBVPSRates,
   };
 };
+
+export const getCompanyScore = (averageGrowthRates) => {
+  const score = Object.keys(averageGrowthRates).reduce(
+    (acc, rate) =>
+      acc +
+      averageGrowthRates[rate]['10'] +
+      averageGrowthRates[rate]['5'] +
+      averageGrowthRates[rate]['1'],
+    0
+  );
+
+  return +score.toFixed(2);
+};
