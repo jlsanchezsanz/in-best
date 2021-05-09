@@ -8,8 +8,9 @@ import {
   getCompanyAnnualROIUrl,
   getCompanyAnnualShareHolderEquityUrl,
   getCompanyAnnualSharesOutstandingUrl,
+  getCompanySummaryUrl,
 } from '../utils/urls';
-import { scrapeAnnualValue, scrapeAnnualValueFromQuarterly } from '../utils/scraping';
+import { scrapeAnnualValue, scrapeAnnualValueFromQuarterly, scrapeTTMEPS } from '../utils/scraping';
 import { getCompanyAverageGrowthRates, getCompanyScore } from '../utils/financials';
 
 export default class CompanyService {
@@ -79,9 +80,18 @@ export default class CompanyService {
     return annualSharesOutstanding;
   }
 
+  static async getCompanyTTMEPS(company) {
+    const { data } = await axios.get(getCompanySummaryUrl(company));
+
+    const TTMEPS = scrapeTTMEPS(data);
+
+    return TTMEPS;
+  }
+
   static async getCompanyAnalysis(company) {
     const revenue = await this.getCompanyAnnualRevenue(company);
     const EPS = await this.getCompanyAnnualEPS(company);
+    const TTMEPS = await this.getCompanyTTMEPS(company);
     const freeCashFlow = await this.getCompanyAnnualFreeCashFlow(company);
     const shareHolderEquity = await this.getCompanyAnnualShareHolderEquity(company);
     const sharesOutstanding = await this.getCompanyAnnualSharesOutstanding(company);
@@ -93,6 +103,7 @@ export default class CompanyService {
 
     return {
       score,
+      TTMEPS,
       ...companyAverageGrowthRates,
       ...companyData,
     };

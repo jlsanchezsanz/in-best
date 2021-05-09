@@ -6,9 +6,13 @@ import {
   getCompanyAnnualShareHolderEquityUrl,
   getCompanyAnnualSharesOutstandingUrl,
   getCompanyAnnualROIUrl,
+  getCompanyAnalysisUrl,
+  getCompanySummaryUrl,
 } from '../urls';
 
 describe('Urls utils', () => {
+  const company = { n: 'AAPL - Apple', s: 'AAPL/apple' };
+
   describe('getCompaniesUrl', () => {
     it('should return companies url', () => {
       const result = getCompaniesUrl();
@@ -19,8 +23,6 @@ describe('Urls utils', () => {
 
   describe('getCompanyAnnualRevenueUrl', () => {
     it('should return revenue url', () => {
-      const company = { n: 'AAPL - Apple', s: 'AAPL/apple' };
-
       const result = getCompanyAnnualRevenueUrl(company);
 
       expect(result).toBe('https://www.macrotrends.net/stocks/charts/AAPL/apple/revenue');
@@ -29,8 +31,6 @@ describe('Urls utils', () => {
 
   describe('getCompanyAnnualEPSUrl', () => {
     it('should return EPS url', () => {
-      const company = { n: 'AAPL - Apple', s: 'AAPL/apple' };
-
       const result = getCompanyAnnualEPSUrl(company);
 
       expect(result).toBe(
@@ -41,8 +41,6 @@ describe('Urls utils', () => {
 
   describe('getCompanyAnnualFreeCashFlowUrl', () => {
     it('should return Free Cash Flow url', () => {
-      const company = { n: 'AAPL - Apple', s: 'AAPL/apple' };
-
       const result = getCompanyAnnualFreeCashFlowUrl(company);
 
       expect(result).toBe('https://www.macrotrends.net/stocks/charts/AAPL/apple/free-cash-flow');
@@ -51,8 +49,6 @@ describe('Urls utils', () => {
 
   describe('getCompanyAnnualShareHolderEquityUrl', () => {
     it('should return Share Holder Equity url', () => {
-      const company = { n: 'AAPL - Apple', s: 'AAPL/apple' };
-
       const result = getCompanyAnnualShareHolderEquityUrl(company);
 
       expect(result).toBe(
@@ -63,8 +59,6 @@ describe('Urls utils', () => {
 
   describe('getCompanyAnnualSharesOutstandingUrl', () => {
     it('should return Shares Outstanding url', () => {
-      const company = { n: 'AAPL - Apple', s: 'AAPL/apple' };
-
       const result = getCompanyAnnualSharesOutstandingUrl(company);
 
       expect(result).toBe(
@@ -75,11 +69,25 @@ describe('Urls utils', () => {
 
   describe('getCompanyAnnualROIUrl', () => {
     it('should return Shares Outstanding url', () => {
-      const company = { n: 'AAPL - Apple', s: 'AAPL/apple' };
-
       const result = getCompanyAnnualROIUrl(company);
 
       expect(result).toBe('https://www.macrotrends.net/stocks/charts/AAPL/apple/roi');
+    });
+  });
+
+  describe('getCompanySummaryUrl', () => {
+    it('should return summary url', () => {
+      const result = getCompanySummaryUrl(company);
+
+      expect(result).toBe('https://finance.yahoo.com/quote/AAPL');
+    });
+  });
+
+  describe('getCompanyAnalysisUrl', () => {
+    it('should return analysis url', () => {
+      const result = getCompanyAnalysisUrl(company);
+
+      expect(result).toBe('https://finance.yahoo.com/quote/AAPL/analysis');
     });
   });
 });

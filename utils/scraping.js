@@ -46,3 +46,19 @@ export const scrapeAnnualValueFromQuarterly = (data) => {
 
   return annualValue;
 };
+
+export const scrapeTTMEPS = (data) => {
+  const $ = cheerio.load(data);
+  const table = $('[data-test="right-summary-table"] > table');
+  const rows = table.children('tbody').children();
+  let TTMEPS;
+
+  rows.each((_, el) => {
+    const text = $(el).children().first().text();
+    if (text === 'EPS (TTM)') {
+      TTMEPS = $(el).children().last().text();
+    }
+  });
+
+  return TTMEPS && toNumber(TTMEPS);
+};

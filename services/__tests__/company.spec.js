@@ -8,6 +8,7 @@ import {
   getCompanyAnnualROIUrl,
   getCompanyAnnualShareHolderEquityUrl,
   getCompanyAnnualSharesOutstandingUrl,
+  getCompanySummaryUrl,
 } from '../../utils/urls';
 import {
   dataRevenue,
@@ -25,6 +26,7 @@ import {
   BVPS,
   ROI,
 } from '../../mocks/scrap-data';
+import { dataSummary, TTMEPS } from '../../mocks/yahoo-finance/summary';
 
 jest.mock('axios');
 
@@ -112,6 +114,15 @@ describe('CompanyService', () => {
     });
   });
 
+  describe('getCompanyTTMEPS', () => {
+    it('should return TTM EPS value', async () => {
+      axios.get.mockResolvedValueOnce({ data: dataSummary });
+      const result = await CompanyService.getCompanyTTMEPS(companies[0]);
+
+      expect(result).toEqual(TTMEPS);
+    });
+  });
+
   describe('getCompanyAnalysis', () => {
     const company = companies[0];
     const dataMap = {
@@ -121,10 +132,12 @@ describe('CompanyService', () => {
       [getCompanyAnnualShareHolderEquityUrl(company)]: dataShareHolderEquity,
       [getCompanyAnnualSharesOutstandingUrl(company)]: dataSharesOutstanding,
       [getCompanyAnnualROIUrl(company)]: dataROI,
+      [getCompanySummaryUrl(company)]: dataSummary,
     };
     const expectedCompanyAnalysis = {
       revenue,
       EPS,
+      TTMEPS,
       freeCashFlow,
       BVPS,
       ROI,
