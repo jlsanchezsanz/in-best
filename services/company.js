@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import {
   getCompaniesUrl,
+  getCompanyAnalysisUrl,
   getCompanyAnnualEPSUrl,
   getCompanyAnnualFreeCashFlowUrl,
   getCompanyAnnualRevenueUrl,
@@ -10,7 +11,12 @@ import {
   getCompanyAnnualSharesOutstandingUrl,
   getCompanySummaryUrl,
 } from '../utils/urls';
-import { scrapeAnnualValue, scrapeAnnualValueFromQuarterly, scrapeTTMEPS } from '../utils/scraping';
+import {
+  scrapeAnnualValue,
+  scrapeAnnualValueFromQuarterly,
+  scrapeNext5YearsGrowthEstimate,
+  scrapeTTMEPS,
+} from '../utils/scraping';
 import { getCompanyAverageGrowthRates, getCompanyScore } from '../utils/financials';
 
 export default class CompanyService {
@@ -88,6 +94,14 @@ export default class CompanyService {
     return TTMEPS;
   }
 
+  static async getCompanyNext5YearsGrowthEstimate(company) {
+    const { data } = await axios.get(getCompanyAnalysisUrl(company));
+
+    const next5YearsGrowthEstimate = scrapeNext5YearsGrowthEstimate(data);
+
+    return next5YearsGrowthEstimate;
+  }
+
   static async getCompanyAnalysis(company) {
     const revenue = await this.getCompanyAnnualRevenue(company);
     const EPS = await this.getCompanyAnnualEPS(company);
@@ -97,6 +111,7 @@ export default class CompanyService {
     const sharesOutstanding = await this.getCompanyAnnualSharesOutstanding(company);
     const BVPS = this.getCompanyAnnualBVPS(shareHolderEquity, sharesOutstanding);
     const ROI = await this.getCompanyAnnualROI(company);
+    const next5YearsGrowthEstimate = await this.getCompanyNext5YearsGrowthEstimate(company);
     const companyData = { BVPS, EPS, freeCashFlow, revenue, ROI };
     const companyAverageGrowthRates = getCompanyAverageGrowthRates(companyData);
     const score = getCompanyScore(companyAverageGrowthRates);
@@ -104,6 +119,7 @@ export default class CompanyService {
     return {
       score,
       TTMEPS,
+      next5YearsGrowthEstimate,
       ...companyAverageGrowthRates,
       ...companyData,
     };

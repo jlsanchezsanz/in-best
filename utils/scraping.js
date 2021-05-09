@@ -62,3 +62,33 @@ export const scrapeTTMEPS = (data) => {
 
   return TTMEPS && toNumber(TTMEPS);
 };
+
+export const scrapeNext5YearsGrowthEstimate = (data) => {
+  const $ = cheerio.load(data);
+  const tables = $('table');
+  let growthEstimateTable;
+
+  tables.each((_, el) => {
+    const headerText = $(el).children('thead').children('tr').children('th').first().text();
+
+    if (headerText === 'Growth Estimates') {
+      growthEstimateTable = el;
+    }
+  });
+
+  if (!growthEstimateTable) {
+    return;
+  }
+
+  const rows = $(growthEstimateTable).children('tbody').children();
+  let next5YearsGrowthEstimate;
+
+  rows.each((_, el) => {
+    const text = $(el).children().first().text();
+    if (text === 'Next 5 Years (per annum)') {
+      next5YearsGrowthEstimate = $(el).children(':nth-child(2)').text();
+    }
+  });
+
+  return next5YearsGrowthEstimate && toNumber(next5YearsGrowthEstimate);
+};

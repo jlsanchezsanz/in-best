@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import CompanyService from '../company';
 import {
+  getCompanyAnalysisUrl,
   getCompanyAnnualEPSUrl,
   getCompanyAnnualFreeCashFlowUrl,
   getCompanyAnnualRevenueUrl,
@@ -27,6 +28,7 @@ import {
   ROI,
 } from '../../mocks/scrap-data';
 import { dataSummary, TTMEPS } from '../../mocks/yahoo-finance/summary';
+import { dataAnalysis, next5YearsGrowthEstimate } from '../../mocks/yahoo-finance/analysis';
 
 jest.mock('axios');
 
@@ -123,6 +125,15 @@ describe('CompanyService', () => {
     });
   });
 
+  describe('getCompanyNext5YearsGrowthEstimate', () => {
+    it('should return TTM EPS value', async () => {
+      axios.get.mockResolvedValueOnce({ data: dataAnalysis });
+      const result = await CompanyService.getCompanyNext5YearsGrowthEstimate(companies[0]);
+
+      expect(result).toEqual(next5YearsGrowthEstimate);
+    });
+  });
+
   describe('getCompanyAnalysis', () => {
     const company = companies[0];
     const dataMap = {
@@ -133,6 +144,7 @@ describe('CompanyService', () => {
       [getCompanyAnnualSharesOutstandingUrl(company)]: dataSharesOutstanding,
       [getCompanyAnnualROIUrl(company)]: dataROI,
       [getCompanySummaryUrl(company)]: dataSummary,
+      [getCompanyAnalysisUrl(company)]: dataAnalysis,
     };
     const expectedCompanyAnalysis = {
       revenue,
@@ -141,6 +153,7 @@ describe('CompanyService', () => {
       freeCashFlow,
       BVPS,
       ROI,
+      next5YearsGrowthEstimate,
       averageGrowthROIRates: { 10: -7.02, 5: 4.85, 1: 17.45 },
       averageGrowthRevenueRates: { 10: 9.75, 5: 4.95, 1: 5.51 },
       averageGrowthEPSRates: { 10: 12.73, 5: 9.54, 1: 10.44 },

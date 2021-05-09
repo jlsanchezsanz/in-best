@@ -1,6 +1,12 @@
-import { scrapeAnnualValue, scrapeAnnualValueFromQuarterly, scrapeTTMEPS } from '../scraping';
+import {
+  scrapeAnnualValue,
+  scrapeAnnualValueFromQuarterly,
+  scrapeNext5YearsGrowthEstimate,
+  scrapeTTMEPS,
+} from '../scraping';
 import { dataRevenue, dataROI, revenue, ROI } from '../../mocks/scrap-data';
 import { dataSummary, TTMEPS } from '../../mocks/yahoo-finance/summary';
+import { dataAnalysis, next5YearsGrowthEstimate } from '../../mocks/yahoo-finance/analysis';
 
 describe('scraping utils', () => {
   describe('scrapeAnnualValue', () => {
@@ -24,6 +30,14 @@ describe('scraping utils', () => {
       const result = scrapeTTMEPS(dataSummary);
 
       expect(result).toEqual(TTMEPS);
+    });
+  });
+
+  describe('scrapeNext5YearsGrowthEstimate', () => {
+    it('should return TTM EPS', () => {
+      const result = scrapeNext5YearsGrowthEstimate(dataAnalysis);
+
+      expect(result).toEqual(next5YearsGrowthEstimate);
     });
   });
 });
