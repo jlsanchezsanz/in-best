@@ -17,7 +17,11 @@ import {
   scrapeNext5YearsGrowthEstimate,
   scrapeTTMEPS,
 } from '../utils/scraping';
-import { getCompanyAverageGrowthRates, getCompanyScore } from '../utils/financials';
+import {
+  getCompanyAverageGrowthRates,
+  getCompanyMarginOfSafetyBuyPrice,
+  getCompanyScore,
+} from '../utils/financials';
 
 export default class CompanyService {
   static async getCompanies() {
@@ -115,11 +119,14 @@ export default class CompanyService {
     const companyData = { BVPS, EPS, freeCashFlow, revenue, ROI };
     const companyAverageGrowthRates = getCompanyAverageGrowthRates(companyData);
     const score = getCompanyScore(companyAverageGrowthRates);
+    const marginOfSafetyBuyPrice = getCompanyMarginOfSafetyBuyPrice(
+      TTMEPS,
+      next5YearsGrowthEstimate
+    );
 
     return {
+      marginOfSafetyBuyPrice,
       score,
-      TTMEPS,
-      next5YearsGrowthEstimate,
       ...companyAverageGrowthRates,
       ...companyData,
     };

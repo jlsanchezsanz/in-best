@@ -1,3 +1,5 @@
+import { MARGIN_OF_SAFETY, MARR, YEARS } from '../constants/estimate';
+
 export const getAverageGrowthRate = (data, years) => {
   const dataYears = Object.keys(data);
   const lastYear = new Date().getFullYear() - 1;
@@ -65,4 +67,14 @@ export const getCompanyScore = (averageGrowthRates) => {
   );
 
   return +score.toFixed(2);
+};
+
+export const getCompanyMarginOfSafetyBuyPrice = (EPS, growthRate) => {
+  const estimatedFuturePE = (2 * growthRate) / 100;
+  const future10YearsEPS = EPS * (1 + growthRate / 100) ** YEARS;
+  const future10YearsSharePrice = future10YearsEPS * estimatedFuturePE * 100;
+  const stickerPrice = future10YearsSharePrice / (1 + MARR / 100) ** YEARS;
+  const marginOfSafetyBuyPrice = (stickerPrice * MARGIN_OF_SAFETY) / 100;
+
+  return +marginOfSafetyBuyPrice.toFixed(2);
 };

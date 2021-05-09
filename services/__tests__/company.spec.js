@@ -126,7 +126,7 @@ describe('CompanyService', () => {
   });
 
   describe('getCompanyNext5YearsGrowthEstimate', () => {
-    it('should return TTM EPS value', async () => {
+    it('should return next 5 years growth rate estimate value', async () => {
       axios.get.mockResolvedValueOnce({ data: dataAnalysis });
       const result = await CompanyService.getCompanyNext5YearsGrowthEstimate(companies[0]);
 
@@ -149,17 +149,16 @@ describe('CompanyService', () => {
     const expectedCompanyAnalysis = {
       revenue,
       EPS,
-      TTMEPS,
       freeCashFlow,
       BVPS,
       ROI,
-      next5YearsGrowthEstimate,
       averageGrowthROIRates: { 10: -7.02, 5: 4.85, 1: 17.45 },
       averageGrowthRevenueRates: { 10: 9.75, 5: 4.95, 1: 5.51 },
       averageGrowthEPSRates: { 10: 12.73, 5: 9.54, 1: 10.44 },
       averageGrowthFreeCashFlowRates: { 10: 8.23, 5: 6.52, 1: 24.57 },
       averageGrowthBVPSRates: { 10: 2.48, 5: -8.54, 1: -23.41 },
       score: 78.05,
+      marginOfSafetyBuyPrice: 102.61,
     };
 
     it('should return company analysis', async () => {

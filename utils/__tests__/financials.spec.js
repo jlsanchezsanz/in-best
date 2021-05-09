@@ -1,5 +1,12 @@
 import { BVPS, EPS, freeCashFlow, revenue, ROI, missingYearsRevenue } from '../../mocks/scrap-data';
-import { getAverageGrowthRate, getCompanyAverageGrowthRates, getCompanyScore } from '../financials';
+import {
+  getAverageGrowthRate,
+  getCompanyAverageGrowthRates,
+  getCompanyScore,
+  getCompanyMarginOfSafetyBuyPrice,
+} from '../financials';
+import { next5YearsGrowthEstimate } from '../../mocks/yahoo-finance/analysis';
+import { TTMEPS } from '../../mocks/yahoo-finance/summary';
 
 describe('Financials utils', () => {
   describe('getAverageGrowthRate', () => {
@@ -56,6 +63,14 @@ describe('Financials utils', () => {
       const result = getCompanyScore(averageGrowthRates);
 
       expect(result).toBe(78.05);
+    });
+  });
+
+  describe('getCompanyMarginOfSafetyBuyPrice', () => {
+    it('should return company margin of safety buy price', () => {
+      const result = getCompanyMarginOfSafetyBuyPrice(TTMEPS, next5YearsGrowthEstimate);
+
+      expect(result).toBe(102.61);
     });
   });
 });
