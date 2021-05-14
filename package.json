@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node server",
+    "start": "node -r esm server",
     "server": "nodemon server",
     "scrap": "node -r esm ./scraping/scraper.js",
     "test": "jest",
