@@ -85,6 +85,18 @@ describe('Financials utils', () => {
 
       expect(result).toBe(6.44);
     });
+
+    it('should return zero if average growth rate is NaN', () => {
+      const result = getAverageGrowthRate({ 2020: -3.86, 2016: -0.9 }, 5);
+
+      expect(result).toBe(0);
+    });
+
+    it('should return zero if average growth rate is NaN', () => {
+      const result = getAverageGrowthRate({ 2020: -3.86, 2016: -0.9 }, 5);
+
+      expect(result).toBe(0);
+    });
   });
 
   describe('getCompanyAverageGrowthRates', () => {
@@ -123,6 +135,12 @@ describe('Financials utils', () => {
       const result = getCompanyMarginOfSafetyBuyPrice(TTMEPS, next5YearsGrowthEstimate);
 
       expect(result).toBe(102.61);
+    });
+
+    it('should return 0 if margin of safety buy price is NaN', () => {
+      const result = getCompanyMarginOfSafetyBuyPrice(isNaN, next5YearsGrowthEstimate);
+
+      expect(result).toBe(0);
     });
   });
 });

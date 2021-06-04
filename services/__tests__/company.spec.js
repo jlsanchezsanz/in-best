@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import CompanyService from '../company';
+import { CompanyService } from '../company';
 import {
   getCompanyAnalysisUrl,
   getCompanyAnnualEPSUrl,
@@ -27,8 +27,9 @@ import {
   BVPS,
   ROI,
 } from '../../mocks/scrap-data';
-import { dataSummary, TTMEPS } from '../../mocks/yahoo-finance/summary';
+import { companyName, dataSummary, TTMEPS } from '../../mocks/yahoo-finance/summary';
 import { dataAnalysis, next5YearsGrowthEstimate } from '../../mocks/yahoo-finance/analysis';
+import { Company } from '../../models/Company';
 
 jest.mock('axios');
 
@@ -37,6 +38,17 @@ afterEach(() => {
 });
 
 describe('CompanyService', () => {
+  const getCompanyDataMap = (company) => ({
+    [getCompanyAnnualRevenueUrl(company)]: dataRevenue,
+    [getCompanyAnnualEPSUrl(company)]: dataEPS,
+    [getCompanyAnnualFreeCashFlowUrl(company)]: dataFreeCashFlow,
+    [getCompanyAnnualShareHolderEquityUrl(company)]: dataShareHolderEquity,
+    [getCompanyAnnualSharesOutstandingUrl(company)]: dataSharesOutstanding,
+    [getCompanyAnnualROIUrl(company)]: dataROI,
+    [getCompanySummaryUrl(company)]: dataSummary,
+    [getCompanyAnalysisUrl(company)]: dataAnalysis,
+  });
+
   describe('getCompanies', () => {
     it('should return a list of companies', async () => {
       axios.get.mockResolvedValueOnce({ data: companies });
@@ -116,12 +128,13 @@ describe('CompanyService', () => {
     });
   });
 
-  describe('getCompanyTTMEPS', () => {
-    it('should return TTM EPS value', async () => {
+  describe('getCompanySummary', () => {
+    it('should return TTM EPS value and company name', async () => {
       axios.get.mockResolvedValueOnce({ data: dataSummary });
-      const result = await CompanyService.getCompanyTTMEPS(companies[0]);
+      const result = await CompanyService.getCompanySummary(companies[0]);
+      const name = companyName;
 
-      expect(result).toEqual(TTMEPS);
+      expect(result).toEqual({ name, TTMEPS });
     });
   });
 
@@ -136,22 +149,16 @@ describe('CompanyService', () => {
 
   describe('getCompanyAnalysis', () => {
     const company = companies[0];
-    const dataMap = {
-      [getCompanyAnnualRevenueUrl(company)]: dataRevenue,
-      [getCompanyAnnualEPSUrl(company)]: dataEPS,
-      [getCompanyAnnualFreeCashFlowUrl(company)]: dataFreeCashFlow,
-      [getCompanyAnnualShareHolderEquityUrl(company)]: dataShareHolderEquity,
-      [getCompanyAnnualSharesOutstandingUrl(company)]: dataSharesOutstanding,
-      [getCompanyAnnualROIUrl(company)]: dataROI,
-      [getCompanySummaryUrl(company)]: dataSummary,
-      [getCompanyAnalysisUrl(company)]: dataAnalysis,
-    };
+    const name = companyName;
+    const dataMap = getCompanyDataMap(company);
     const expectedCompanyAnalysis = {
+      tickerSymbol: 'AAPL',
       revenue,
       EPS,
       freeCashFlow,
       BVPS,
       ROI,
+      name,
       averageGrowthROIRates: { 10: -7.02, 5: 4.85, 1: 17.45 },
       averageGrowthRevenueRates: { 10: 9.75, 5: 4.95, 1: 5.51 },
       averageGrowthEPSRates: { 10: 12.73, 5: 9.54, 1: 10.44 },

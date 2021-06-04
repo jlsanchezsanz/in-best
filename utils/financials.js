@@ -41,7 +41,7 @@ export const getAverageGrowthRate = (data, years) => {
 
   const twoDecimalsAverageGrowthRate = +averageGrowthRate.toFixed(2);
 
-  return twoDecimalsAverageGrowthRate;
+  return isNaN(twoDecimalsAverageGrowthRate) ? 0 : twoDecimalsAverageGrowthRate;
 };
 
 export const getCompanyAverageGrowthRates = (companyData) => {
@@ -99,7 +99,7 @@ export const getCompanyMarginOfSafetyBuyPrice = (EPS, growthRate) => {
   const future10YearsEPS = EPS * (1 + growthRate / 100) ** YEARS;
   const future10YearsSharePrice = future10YearsEPS * estimatedFuturePE * 100;
   const stickerPrice = future10YearsSharePrice / (1 + MARR / 100) ** YEARS;
-  const marginOfSafetyBuyPrice = (stickerPrice * MARGIN_OF_SAFETY) / 100;
+  const marginOfSafetyBuyPrice = +((stickerPrice * MARGIN_OF_SAFETY) / 100).toFixed(2);
 
-  return +marginOfSafetyBuyPrice.toFixed(2);
+  return isNaN(marginOfSafetyBuyPrice) ? 0 : marginOfSafetyBuyPrice;
 };
