@@ -155,6 +155,91 @@ export const dataROI = `
 </table>
 `;
 
+export const dataROIMissingInfo = `
+  <table class="table">
+    <tbody>
+      <tr><td>2021-03-31</td><td>$38.16B</td><td></td><td>inf%</td></tr>
+      <tr><td>2020-12-31</td><td>$32.67B</td><td></td><td>inf%</td></tr>
+      <tr><td>2020-09-30</td><td>$28.75B</td><td></td><td>inf%</td></tr>
+      <tr><td>2020-06-30</td><td>$27.90B</td><td></td><td>inf%</td></tr>
+      <tr><td>2020-03-31</td><td>$26.56B</td><td></td><td>inf%</td></tr>
+      <tr><td>2019-12-31</td><td>$23.99B</td><td></td><td>103.08%</td></tr>
+      <tr><td>2019-09-30</td><td>$22.95B</td><td></td><td>98.62%</td></tr>
+      <tr><td>2019-06-30</td><td>$21.54B</td><td></td><td>92.58%</td></tr>
+      <tr><td>2019-03-31</td><td>$22.78B</td><td>$93.08B</td><td>97.90%</td></tr>
+      <tr><td>2018-12-31</td><td>$24.91B</td><td></td><td>inf%</td></tr>
+      <tr><td>2018-09-30</td><td>$24.45B</td><td></td><td>inf%</td></tr>
+      <tr><td>2018-06-30</td><td>$23.79B</td><td></td><td>inf%</td></tr>
+      <tr><td>2018-03-31</td><td>$22.33B</td><td></td><td>inf%</td></tr>
+      <tr><td>2017-12-31</td><td>$20.20B</td><td></td><td>inf%</td></tr>
+      <tr><td>2017-09-30</td><td>$17.42B</td><td></td><td>inf%</td></tr>
+      <tr><td>2017-06-30</td><td>$15.41B</td><td></td><td>inf%</td></tr>
+      <tr><td>2017-03-31</td><td>$13.74B</td><td></td><td>inf%</td></tr>
+      <tr><td>2016-12-31</td><td>$12.43B</td><td></td><td>inf%</td></tr>
+      <tr><td>2016-09-30</td><td>$10.42B</td><td></td><td>94.04%</td></tr>
+      <tr><td>2016-06-30</td><td>$8.76B</td><td></td><td>40.83%</td></tr>
+      <tr><td>2016-03-31</td><td>$7.30B</td><td></td><td>23.29%</td></tr>
+      <tr><td>2015-12-31</td><td>$6.23B</td><td>$44.33B</td><td>15.27%</td></tr>
+      <tr><td>2015-09-30</td><td>$4.80B</td><td>$41.53B</td><td>12.39%</td></tr>
+      <tr><td>2015-06-30</td><td>$4.74B</td><td>$39.56B</td><td>14.05%</td></tr>
+      <tr><td>2015-03-31</td><td>$4.85B</td><td>$37.61B</td><td>17.07%</td></tr>
+      <tr><td>2014-12-31</td><td>$4.99B</td><td>$36.22B</td><td>21.48%</td></tr>
+      <tr><td>2014-09-30</td><td>$5.00B</td><td>$21.37B</td><td>27.56%</td></tr>
+      <tr><td>2014-06-30</td><td>$4.33B</td><td>$18.50B</td><td>26.89%</td></tr>
+      <tr><td>2014-03-31</td><td>$3.51B</td><td>$16.93B</td><td>23.31%</td></tr>
+      <tr><td>2013-12-31</td><td>$2.80B</td><td>$15.71B</td><td>19.68%</td></tr>
+      <tr><td>2013-09-30</td><td>$2.19B</td><td>$13.34B</td><td>15.95%</td></tr>
+      <tr><td>2013-06-30</td><td>$1.84B</td><td>$14.20B</td><td>13.02%</td></tr>
+      <tr><td>2013-03-31</td><td>$0.53B</td><td>$13.74B</td><td>3.79%</td></tr>
+      <tr><td>2012-12-31</td><td>$0.54B</td><td>$13.75B</td><td>4.50%</td></tr>
+      <tr><td>2012-09-30</td><td>$0.56B</td><td>$14.70B</td><td>5.72%</td></tr>
+      <tr><td>2012-06-30</td><td>$0.60B</td><td>$13.70B</td><td>9.73%</td></tr>
+      <tr><td>2012-03-31</td><td>$1.75B</td><td>$5.68B</td><td>63.79%</td></tr>
+      <tr><td>2011-12-31</td><td>$1.76B</td><td>$5.30B</td><td>132.68%</td></tr>
+      <tr><td>2011-09-30</td><td>$1.65B</td><td></td><td>272.97%</td></tr>
+      <tr><td>2011-06-30</td><td>$1.45B</td><td></td><td>240.13%</td></tr>
+      <tr><td>2011-03-31</td><td>$1.26B</td><td></td><td>208.79%</td></tr>
+      <tr><td>2010-12-31</td><td>$1.03B</td><td>$2.41B</td><td>171.31%</td></tr>
+    </tbody>
+  </table>
+`;
+
+export const ROIMissingInfo = {
+  2019: 98.62,
+  2016: 94.04,
+  2015: 12.39,
+  2014: 27.56,
+  2013: 15.95,
+  2012: 5.72,
+  2011: 272.97,
+};
+
+export const ROINegativeValues = {
+  2020: 8.03,
+  2019: -0.08,
+  2018: -9.66,
+  2017: -9.8,
+  2016: -15.57,
+  2015: -18.19,
+  2014: -5.32,
+  2013: -18.83,
+  2012: -83.07,
+  2011: -57.18,
+};
+
+export const freeCashFlowStartWithZero = {
+  2020: 23810,
+  2019: 17678,
+  2018: 15841,
+  2017: 9895,
+  2016: 7972,
+  2015: 5880,
+  2014: 3722,
+  2013: 2209,
+  2012: 1335,
+  2011: 0,
+};
+
 export const companies = [
   { n: 'AAPL - Apple', s: 'AAPL/apple' },
   { n: 'MSFT - Microsoft', s: 'MSFT/microsoft' },
@@ -176,15 +261,15 @@ export const revenue = {
 };
 
 export const missingYearsRevenue = {
-  2012: 156508,
-  2013: 170910,
-  2014: 182795,
-  2015: 233715,
-  2016: 215639,
-  2017: 229234,
-  2018: 265595,
-  2019: 260174,
   2020: 274515,
+  2019: 260174,
+  2018: 265595,
+  2017: 229234,
+  2016: 215639,
+  2015: 233715,
+  2014: 182795,
+  2013: 170910,
+  2012: 156508,
 };
 
 export const EPS = {

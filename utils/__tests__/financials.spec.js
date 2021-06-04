@@ -1,4 +1,14 @@
-import { BVPS, EPS, freeCashFlow, revenue, ROI, missingYearsRevenue } from '../../mocks/scrap-data';
+import {
+  BVPS,
+  EPS,
+  freeCashFlow,
+  revenue,
+  ROI,
+  missingYearsRevenue,
+  ROIMissingInfo,
+  ROINegativeValues,
+  freeCashFlowStartWithZero,
+} from '../../mocks/scrap-data';
 import {
   getAverageGrowthRate,
   getCompanyAverageGrowthRates,
@@ -16,16 +26,58 @@ describe('Financials utils', () => {
       expect(result).toBe(9.75);
     });
 
+    it('should return average growth rate per year - 10 years - missing info', () => {
+      const result = getAverageGrowthRate(ROIMissingInfo, 10);
+
+      expect(result).toBe(-10.7);
+    });
+
+    it('should return average growth rate per year - 10 years - negative values', () => {
+      const result = getAverageGrowthRate(ROINegativeValues, 10);
+
+      expect(result).toBe(7.91);
+    });
+
+    it('should return average growth rate per year - 10 years - start value is 0', () => {
+      const result = getAverageGrowthRate(freeCashFlowStartWithZero, 10);
+
+      expect(result).toBe(37.73);
+    });
+
     it('should return average growth rate per year - 5 years', () => {
       const result = getAverageGrowthRate(revenue, 5);
 
       expect(result).toBe(4.95);
     });
 
+    it('should return average growth rate per year - 5 years - missing info', () => {
+      const result = getAverageGrowthRate(ROIMissingInfo, 5);
+
+      expect(result).toBe(51.42);
+    });
+
+    it('should return average growth rate per year - 5 years - negative values', () => {
+      const result = getAverageGrowthRate(ROINegativeValues, 5);
+
+      expect(result).toBe(20.26);
+    });
+
     it('should return average growth rate per year - 1 year', () => {
       const result = getAverageGrowthRate(revenue, 1);
 
       expect(result).toBe(5.51);
+    });
+
+    it('should return 0 if there is no info for the last 2 years', () => {
+      const result = getAverageGrowthRate(ROIMissingInfo, 1);
+
+      expect(result).toBe(0);
+    });
+
+    it('should return average growth rate per year - 1 year - negative values', () => {
+      const result = getAverageGrowthRate(ROINegativeValues, 1);
+
+      expect(result).toBe(10137.5);
     });
 
     it('should return average growth rate per year - missing years', () => {

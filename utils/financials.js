@@ -1,19 +1,44 @@
 import { MARGIN_OF_SAFETY, MARR, YEARS } from '../constants/estimate';
 
-export const getAverageGrowthRate = (data, years) => {
+const _getFirstYear = (data, years) => {
   const dataYears = Object.keys(data);
-  const lastYear = new Date().getFullYear() - 1;
+  const lastYear = Math.max(...dataYears);
   let firstYear = lastYear - years + 1;
-  let updatedYears = years;
 
   if (dataYears.length < years) {
     firstYear = Math.min(...dataYears);
-    updatedYears = dataYears.length;
   } else if (years === 1) {
     firstYear = lastYear - 1;
   }
 
-  const averageGrowthRate = ((data[lastYear] / data[firstYear]) ** (1 / updatedYears) - 1) * 100;
+  if (data[firstYear] === 0) {
+    for (let newFirstYear = firstYear; newFirstYear < lastYear; newFirstYear++) {
+      if (data[newFirstYear] > 0) {
+        return newFirstYear;
+      }
+    }
+  }
+
+  return firstYear;
+};
+
+export const getAverageGrowthRate = (data, years) => {
+  const dataYears = Object.keys(data);
+  const lastYear = Math.max(...dataYears);
+  const firstYear = _getFirstYear(data, years);
+
+  if (dataYears.indexOf(firstYear.toString()) < 0) {
+    return 0;
+  }
+
+  const updatedYears = Math.min(years, lastYear - firstYear + 1);
+
+  const averageGrowthRate =
+    (((data[lastYear] - data[firstYear] + Math.abs(data[firstYear])) / Math.abs(data[firstYear])) **
+      (1 / updatedYears) -
+      1) *
+    100;
+
   const twoDecimalsAverageGrowthRate = +averageGrowthRate.toFixed(2);
 
   return twoDecimalsAverageGrowthRate;
