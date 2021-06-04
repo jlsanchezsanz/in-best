@@ -1,6 +1,20 @@
 export const TTMEPS = 4.45;
 
+export const companyName = 'Apple Inc. (AAPL)';
+
 export const dataSummary = `
+  <div id="quote-header-info" data-yaft-module="tdv2-applet-QuoteHeader" data-test="quote-header">
+    <div>
+      <div>
+        <div>
+          <h1>Apple Inc. (AAPL)</h1>
+        </div>
+        <div>
+          <span>NasdaqGS - NasdaqGS Real Time Price. Currency in USD</span>
+        </div>
+      </div>
+    </div>
+  </div>
   <div
   id="quote-summary"
   class="Bxz(bb) D(ib) Va(t) Mih(250px)!--lgv2 W(100%) Mt(-6px) Mt(0px)--mobp Mt(0px)--mobl W(50%)!--lgv2 Mend(20px)!--lgv2 Pend(10px)!--lgv2"

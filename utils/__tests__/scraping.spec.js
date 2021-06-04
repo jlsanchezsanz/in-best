@@ -1,11 +1,19 @@
 import {
   scrapeAnnualValue,
   scrapeAnnualValueFromQuarterly,
+  scrapeCompanyName,
   scrapeNext5YearsGrowthEstimate,
   scrapeTTMEPS,
 } from '../scraping';
-import { dataRevenue, dataROI, revenue, ROI } from '../../mocks/scrap-data';
-import { dataSummary, TTMEPS } from '../../mocks/yahoo-finance/summary';
+import {
+  dataRevenue,
+  dataROI,
+  dataROIMissingInfo,
+  revenue,
+  ROI,
+  ROIMissingInfo,
+} from '../../mocks/scrap-data';
+import { companyName, dataSummary, TTMEPS } from '../../mocks/yahoo-finance/summary';
 import { dataAnalysis, next5YearsGrowthEstimate } from '../../mocks/yahoo-finance/analysis';
 
 describe('scraping utils', () => {
@@ -23,6 +31,12 @@ describe('scraping utils', () => {
 
       expect(result).toEqual(ROI);
     });
+
+    it('should return annual value object - missing info', () => {
+      const result = scrapeAnnualValueFromQuarterly(dataROIMissingInfo);
+
+      expect(result).toEqual(ROIMissingInfo);
+    });
   });
 
   describe('scrapeTTMEPS', () => {
@@ -30,6 +44,14 @@ describe('scraping utils', () => {
       const result = scrapeTTMEPS(dataSummary);
 
       expect(result).toEqual(TTMEPS);
+    });
+  });
+
+  describe('scrapeCompanyName', () => {
+    it('should return company name', () => {
+      const result = scrapeCompanyName(dataSummary);
+
+      expect(result).toEqual(companyName);
     });
   });
 

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import PromisePool from '@supercharge/promise-pool';
 
 import {
   getCompaniesUrl,
@@ -14,6 +15,7 @@ import {
 import {
   scrapeAnnualValue,
   scrapeAnnualValueFromQuarterly,
+  scrapeCompanyName,
   scrapeNext5YearsGrowthEstimate,
   scrapeTTMEPS,
 } from '../utils/scraping';
@@ -22,8 +24,10 @@ import {
   getCompanyMarginOfSafetyBuyPrice,
   getCompanyScore,
 } from '../utils/financials';
+import { getTickerSymbol } from '../utils/company';
+import { Company } from '../models/Company';
 
-export default class CompanyService {
+export class CompanyService {
   static async getCompanies() {
     const { data } = await axios.get(getCompaniesUrl());
 
@@ -90,12 +94,12 @@ export default class CompanyService {
     return annualSharesOutstanding;
   }
 
-  static async getCompanyTTMEPS(company) {
+  static async getCompanySummary(company) {
     const { data } = await axios.get(getCompanySummaryUrl(company));
-
     const TTMEPS = scrapeTTMEPS(data);
+    const name = scrapeCompanyName(data);
 
-    return TTMEPS;
+    return { name, TTMEPS };
   }
 
   static async getCompanyNext5YearsGrowthEstimate(company) {
@@ -107,9 +111,10 @@ export default class CompanyService {
   }
 
   static async getCompanyAnalysis(company) {
+    const tickerSymbol = getTickerSymbol(company);
     const revenue = await this.getCompanyAnnualRevenue(company);
     const EPS = await this.getCompanyAnnualEPS(company);
-    const TTMEPS = await this.getCompanyTTMEPS(company);
+    const { name, TTMEPS } = await this.getCompanySummary(company);
     const freeCashFlow = await this.getCompanyAnnualFreeCashFlow(company);
     const shareHolderEquity = await this.getCompanyAnnualShareHolderEquity(company);
     const sharesOutstanding = await this.getCompanyAnnualSharesOutstanding(company);
@@ -125,6 +130,8 @@ export default class CompanyService {
     );
 
     return {
+      tickerSymbol,
+      name,
       marginOfSafetyBuyPrice,
       score,
       ...companyAverageGrowthRates,

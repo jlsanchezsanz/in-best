@@ -63,6 +63,13 @@ export const scrapeTTMEPS = (data) => {
   return TTMEPS && toNumber(TTMEPS);
 };
 
+export const scrapeCompanyName = (data) => {
+  const $ = cheerio.load(data);
+  const companyName = $('h1').text();
+
+  return companyName;
+};
+
 export const scrapeNext5YearsGrowthEstimate = (data) => {
   const $ = cheerio.load(data);
   const tables = $('table');
