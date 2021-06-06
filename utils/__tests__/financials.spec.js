@@ -8,6 +8,7 @@ import {
   ROIMissingInfo,
   ROINegativeValues,
   freeCashFlowStartWithZero,
+  EPSStartingWithZeroAndNegativeValues,
 } from '../../mocks/scrap-data';
 import {
   getAverageGrowthRate,
@@ -94,6 +95,12 @@ describe('Financials utils', () => {
 
     it('should return zero if average growth rate is NaN', () => {
       const result = getAverageGrowthRate({ 2020: -3.86, 2016: -0.9 }, 5);
+
+      expect(result).toBe(0);
+    });
+
+    it('should return average growth rate - start value is 0 - negative values', () => {
+      const result = getAverageGrowthRate(EPSStartingWithZeroAndNegativeValues, 10);
 
       expect(result).toBe(0);
     });

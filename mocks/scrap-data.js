@@ -291,6 +291,19 @@ export const EPS = {
   2005: 0.06,
 };
 
+export const EPSStartingWithZeroAndNegativeValues = {
+  2020: -4.46,
+  2019: -4.25,
+  2018: -3.99,
+  2017: -5.45,
+  2016: -4.26,
+  2015: -5.34,
+  2014: -7.46,
+  2013: -4.92,
+  2012: -0.3,
+  2011: 0,
+};
+
 export const freeCashFlow = {
   2020: 73365,
   2019: 58896,

@@ -13,7 +13,7 @@ const _getFirstYear = (data, years) => {
 
   if (data[firstYear] === 0) {
     for (let newFirstYear = firstYear; newFirstYear < lastYear; newFirstYear++) {
-      if (data[newFirstYear] > 0) {
+      if (data[newFirstYear] !== 0) {
         return newFirstYear;
       }
     }
