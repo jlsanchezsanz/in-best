@@ -5,11 +5,12 @@
   "scripts": {
     "start": "node -r esm server",
     "server": "nodemon server",
-    "scrap": "node -r esm ./scraping/scraper.js",
+    "scrap": "node -r esm ./scripts/scrap.js",
     "test": "jest",
     "test:watch": "yarn test --watch"
   },
   "dependencies": {
+    "@supercharge/promise-pool": "^1.7.0",
     "axios": "^0.21.1",
     "cheerio": "^1.0.0-rc.6",
     "config": "^3.3.6",

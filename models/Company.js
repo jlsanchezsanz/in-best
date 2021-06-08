@@ -18,7 +18,6 @@ const AverageGrowthRates = {
 const CompanySchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
   },
   tickerSymbol: {
     type: String,

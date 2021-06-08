@@ -138,4 +138,38 @@ export class CompanyService {
       ...companyData,
     };
   }
+
+  static async insertCompanyAnalysis(company) {
+    try {
+      const companyAnalysis = await this.getCompanyAnalysis(company);
+      const { tickerSymbol } = companyAnalysis;
+      let foundCompany = await Company.findOne({ tickerSymbol });
+
+      if (!foundCompany) {
+        foundCompany = new Company();
+      }
+
+      Object.keys(companyAnalysis).forEach((key) => {
+        foundCompany[key] = companyAnalysis[key];
+      });
+
+      await foundCompany.save();
+    } catch (error) {
+      console.log(`${company} \n ${error}`);
+    }
+  }
+
+  static async updateAllCompaniesAnalysis() {
+    const companies = await this.getCompanies();
+    const { results, errors } = await PromisePool.withConcurrency(20)
+      .for(companies)
+      .process(this.insertCompanyAnalysis.bind(this));
+
+    if (errors) {
+      console.log(errors);
+      return;
+    }
+
+    return results;
+  }
 }
