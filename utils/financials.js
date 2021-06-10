@@ -83,11 +83,7 @@ export const getCompanyAverageGrowthRates = (companyData) => {
 
 export const getCompanyScore = (averageGrowthRates) => {
   const score = Object.keys(averageGrowthRates).reduce(
-    (acc, rate) =>
-      acc +
-      averageGrowthRates[rate]['10'] +
-      averageGrowthRates[rate]['5'] +
-      averageGrowthRates[rate]['1'],
+    (acc, rate) => acc + averageGrowthRates[rate]['10'],
     0
   );
 

@@ -133,7 +133,7 @@ describe('Financials utils', () => {
       };
       const result = getCompanyScore(averageGrowthRates);
 
-      expect(result).toBe(78.05);
+      expect(result).toBe(26.17);
     });
   });
 
