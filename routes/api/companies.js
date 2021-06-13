@@ -6,10 +6,38 @@ import { Company } from '../../models/Company';
 export const companiesRouter = express.Router();
 
 // @route   GET api/companies
-// @desc    Test route
+// @desc    Get companies
 // @access  Public
-companiesRouter.get('/', (req, res) => {
-  res.send('Companies route');
+companiesRouter.get('/:page/:limit', async (req, res) => {
+  try {
+    const page = +req.params.page;
+    const limit = +req.params.limit;
+    const count = await Company.countDocuments();
+    const pages = count / limit;
+    const offset = (page - 1) * limit;
+
+    if (page > pages) {
+      return res.json(`Page ${page} not found. There's only ${pages} pages.`);
+    }
+
+    const companies = await Company.find({ score: { $lt: 1000000 } })
+      .sort([['score', 'desc']])
+      .skip(offset)
+      .limit(limit);
+
+    const response = {
+      companies,
+      count,
+      currentPage: page,
+      pages,
+    };
+
+    return res.json(response);
+  } catch (error) {
+    console.error(error.message);
+
+    return res.status(500).send('Server Error');
+  }
 });
 
 // @route   POST api/companies
