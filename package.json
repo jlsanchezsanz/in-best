@@ -3,11 +3,16 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "client": "yarn --cwd client start",
+    "dev": "concurrently \"yarn start\" \"yarn client\"",
     "start": "node -r esm server",
     "server": "nodemon server",
     "scrap": "node -r esm ./scripts/scrap.js",
+    "sort": "node -r esm ./scripts/sort.js",
     "test": "jest",
-    "test:watch": "yarn test --watch"
+    "test:watch": "yarn test --watch",
+    "test:client": "yarn --cwd client test",
+    "test:client:watch": "yarn --cwd client test --watch"
   },
   "dependencies": {
     "@supercharge/promise-pool": "^1.7.0",
