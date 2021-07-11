@@ -20,7 +20,13 @@ companiesRouter.get('/:page/:limit', async (req, res) => {
       return res.json(`Page ${page} not found. There's only ${pages} pages.`);
     }
 
-    const companies = await Company.find({ score: { $lt: 1000000 } })
+    const companies = await Company.find({
+      'averageGrowthBVPSRates.10': { $gt: 5 },
+      'averageGrowthEPSRates.10': { $gt: 5 },
+      'averageGrowthFreeCashFlowRates.10': { $gt: 5 },
+      'averageGrowthRevenueRates.10': { $gt: 5 },
+      'averageGrowthROIRates.10': { $gt: 5 },
+    })
       .sort([['score', 'desc']])
       .skip(offset)
       .limit(limit);
