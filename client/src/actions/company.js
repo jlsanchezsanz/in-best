@@ -2,9 +2,11 @@ import axios from 'axios';
 
 import { CHANGE_PAGE, GET_COMPANIES, GET_COMPANIES_ERROR } from './types';
 
-export const getCompanies = (page, limit) => async (dispatch) => {
+export const getCompanies = (page, limit, BVPS, EPS, FCF, revenue, ROI) => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/companies/${page}/${limit}`);
+    const res = await axios.get(
+      `/api/companies/${page}/${limit}/${BVPS}/${EPS}/${FCF}/${revenue}/${ROI}`
+    );
 
     dispatch({
       type: GET_COMPANIES,

@@ -3,20 +3,27 @@ import React, { Fragment, useEffect } from 'react';
 import { Pagination, ProgressBar, Table } from 'react-bootstrap';
 
 import { changePage, getCompanies } from '../actions/company';
+import { changeFilters } from '../actions/filters';
+import Filters from './Filters';
 
 const CompaniesList = ({
+  changeFilters,
   changePage,
   getCompanies,
   company: { companies, currentPage, loading, pages },
+  filters,
 }) => {
+  const { BVPS, EPS, FCF, revenue, ROI } = filters;
+
   useEffect(() => {
-    getCompanies(currentPage, 10);
-  }, [currentPage, getCompanies]);
+    getCompanies(currentPage, 10, BVPS, EPS, FCF, revenue, ROI);
+  }, [currentPage, getCompanies, BVPS, EPS, FCF, revenue, ROI]);
 
   return loading ? (
     <div>Loading...</div>
   ) : (
     <Fragment>
+      <Filters onChange={changeFilters} filters={filters} />
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -74,8 +81,8 @@ const CompaniesList = ({
                     label={`${averageGrowthROIRates[10]}%`}
                   />
                 </td>
-                <td>{marginOfSafetyBuyPrice}</td>
-                <td>{marginOfSafetyBuyPrice}</td>
+                <td>${marginOfSafetyBuyPrice}</td>
+                <td>${marginOfSafetyBuyPrice}</td>
               </tr>
             )
           )}
@@ -86,11 +93,11 @@ const CompaniesList = ({
         <Pagination.Item active={currentPage === 1} onClick={() => changePage(1)}>
           1
         </Pagination.Item>
-        {currentPage > 2 && <Pagination.Ellipsis />}
+        {currentPage > 2 && <Pagination.Ellipsis disabled />}
         {currentPage !== 1 && currentPage !== pages && (
           <Pagination.Item active>{currentPage}</Pagination.Item>
         )}
-        {currentPage < pages - 1 && <Pagination.Ellipsis />}
+        {currentPage < pages - 1 && <Pagination.Ellipsis disabled />}
         <Pagination.Item active={currentPage === pages} onClick={() => changePage(pages)}>
           {pages}
         </Pagination.Item>
@@ -105,9 +112,10 @@ const CompaniesList = ({
 
 const mapStateToProps = (state) => ({
   company: state.company,
+  filters: state.filters,
 });
 
-export default connect(mapStateToProps, { changePage, getCompanies })(CompaniesList);
+export default connect(mapStateToProps, { changeFilters, changePage, getCompanies })(CompaniesList);
 
 /* <div className="card mb-3">
             <div className="row g-0">
