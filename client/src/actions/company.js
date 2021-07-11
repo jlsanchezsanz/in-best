@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { GET_COMPANIES, GET_COMPANIES_ERROR } from './types';
+import { CHANGE_PAGE, GET_COMPANIES, GET_COMPANIES_ERROR } from './types';
 
 export const getCompanies = (page, limit) => async (dispatch) => {
   try {
@@ -19,4 +19,11 @@ export const getCompanies = (page, limit) => async (dispatch) => {
       },
     });
   }
+};
+
+export const changePage = (page) => async (dispatch) => {
+  dispatch({
+    type: CHANGE_PAGE,
+    payload: page,
+  });
 };

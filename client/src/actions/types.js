@@ -1,2 +1,3 @@
 export const GET_COMPANIES = 'GET_COMPANIES';
 export const GET_COMPANIES_ERROR = 'GET_COMPANIES_ERROR';
+export const CHANGE_PAGE = 'CHANGE_PAGE';

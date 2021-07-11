@@ -1,13 +1,17 @@
 import { connect } from 'react-redux';
 import React, { Fragment, useEffect } from 'react';
-import { ProgressBar, Table } from 'react-bootstrap';
+import { Pagination, ProgressBar, Table } from 'react-bootstrap';
 
-import { getCompanies } from '../actions/company';
+import { changePage, getCompanies } from '../actions/company';
 
-const CompaniesList = ({ getCompanies, company: { companies, loading, error } }) => {
+const CompaniesList = ({
+  changePage,
+  getCompanies,
+  company: { companies, currentPage, loading, pages },
+}) => {
   useEffect(() => {
-    getCompanies(1, 10);
-  }, [getCompanies]);
+    getCompanies(currentPage, 10);
+  }, [currentPage, getCompanies]);
 
   return loading ? (
     <div>Loading...</div>
@@ -38,7 +42,7 @@ const CompaniesList = ({ getCompanies, company: { companies, loading, error } })
               name,
               tickerSymbol,
             }) => (
-              <tr>
+              <tr key={tickerSymbol}>
                 <td>{name || tickerSymbol}</td>
                 <td>
                   <ProgressBar
@@ -70,17 +74,31 @@ const CompaniesList = ({ getCompanies, company: { companies, loading, error } })
                     label={`${averageGrowthROIRates[10]}%`}
                   />
                 </td>
-                <td>
-                  {marginOfSafetyBuyPrice}
-                </td>
-                <td>
-                  {marginOfSafetyBuyPrice}
-                </td>
+                <td>{marginOfSafetyBuyPrice}</td>
+                <td>{marginOfSafetyBuyPrice}</td>
               </tr>
             )
           )}
         </tbody>
       </Table>
+      <Pagination>
+        <Pagination.Prev disabled={currentPage === 1} onClick={() => changePage(currentPage - 1)} />
+        <Pagination.Item active={currentPage === 1} onClick={() => changePage(1)}>
+          1
+        </Pagination.Item>
+        {currentPage > 2 && <Pagination.Ellipsis />}
+        {currentPage !== 1 && currentPage !== pages && (
+          <Pagination.Item active>{currentPage}</Pagination.Item>
+        )}
+        {currentPage < pages - 1 && <Pagination.Ellipsis />}
+        <Pagination.Item active={currentPage === pages} onClick={() => changePage(pages)}>
+          {pages}
+        </Pagination.Item>
+        <Pagination.Next
+          disabled={currentPage === pages}
+          onClick={() => changePage(currentPage + 1)}
+        />
+      </Pagination>
     </Fragment>
   );
 };
@@ -89,7 +107,7 @@ const mapStateToProps = (state) => ({
   company: state.company,
 });
 
-export default connect(mapStateToProps, { getCompanies })(CompaniesList);
+export default connect(mapStateToProps, { changePage, getCompanies })(CompaniesList);
 
 /* <div className="card mb-3">
             <div className="row g-0">

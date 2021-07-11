@@ -1,4 +1,4 @@
-import { GET_COMPANIES, GET_COMPANIES_ERROR } from '../actions/types';
+import { CHANGE_PAGE, GET_COMPANIES, GET_COMPANIES_ERROR } from '../actions/types';
 
 const initialState = {
   companies: [],
@@ -24,6 +24,11 @@ const companyReducer = (state = initialState, action) => {
         ...state,
         error: payload,
         loading: false,
+      };
+    case CHANGE_PAGE:
+      return {
+        ...state,
+        currentPage: payload,
       };
     default:
       return { ...state };
