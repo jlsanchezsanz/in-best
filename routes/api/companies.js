@@ -8,28 +8,40 @@ export const companiesRouter = express.Router();
 // @route   GET api/companies
 // @desc    Get companies
 // @access  Public
-companiesRouter.get('/:page/:limit', async (req, res) => {
+companiesRouter.get('/:page/:limit/:bvps/:eps/:fcf/:revenue/:roi', async (req, res) => {
   try {
     const page = +req.params.page;
     const limit = +req.params.limit;
-    const count = await Company.countDocuments();
-    const pages = count / limit;
+    const BVPS = +req.params.bvps;
+    const EPS = +req.params.eps;
+    const FCF = +req.params.fcf;
+    const revenue = +req.params.revenue;
+    const ROI = +req.params.roi;
     const offset = (page - 1) * limit;
+
+    const companies = await Company.find({
+      'averageGrowthBVPSRates.10': { $gt: BVPS },
+      'averageGrowthEPSRates.10': { $gt: EPS },
+      'averageGrowthFreeCashFlowRates.10': { $gt: FCF },
+      'averageGrowthRevenueRates.10': { $gt: revenue },
+      'averageGrowthROIRates.10': { $gt: ROI },
+    })
+      .sort([
+        ['averageGrowthBVPSRates.10', 'desc'],
+        ['averageGrowthEPSRates.10', 'desc'],
+        ['averageGrowthFreeCashFlowRates.10', 'desc'],
+        ['averageGrowthRevenueRates.10', 'desc'],
+        ['averageGrowthROIRates.10', 'desc'],
+      ])
+      .skip(offset)
+      // .limit(limit);
+    console.log(companies.length);
+    const count = companies.length;
+    const pages = count / limit;
 
     if (page > pages) {
       return res.json(`Page ${page} not found. There's only ${pages} pages.`);
     }
-
-    const companies = await Company.find({
-      'averageGrowthBVPSRates.10': { $gt: 5 },
-      'averageGrowthEPSRates.10': { $gt: 5 },
-      'averageGrowthFreeCashFlowRates.10': { $gt: 5 },
-      'averageGrowthRevenueRates.10': { $gt: 5 },
-      'averageGrowthROIRates.10': { $gt: 5 },
-    })
-      .sort([['score', 'desc']])
-      .skip(offset)
-      .limit(limit);
 
     const response = {
       companies,

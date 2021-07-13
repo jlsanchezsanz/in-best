@@ -8,7 +8,7 @@ const Filters = ({ onChange, filters }) => {
   const getOptions = (filterValue) =>
     options.map((value) => {
       return (
-        <option selected={value === filterValue} value={value}>
+        <option key={`${filterValue}-${value}`} defaultValue={value === filterValue} value={value}>
           {value}
         </option>
       );
