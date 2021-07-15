@@ -1,11 +1,11 @@
 import { CHANGE_FILTERS } from '../actions/types';
 
 const initialState = {
-  BVPS: 5,
-  EPS: 5,
-  FCF: 5,
-  revenue: 5,
-  ROI: 5,
+  BVPS: 10,
+  EPS: 10,
+  FCF: 10,
+  revenue: 10,
+  ROI: 10,
 };
 
 const filtersReducer = (state = initialState, action) => {

@@ -25,26 +25,23 @@ companiesRouter.get('/:page/:limit/:bvps/:eps/:fcf/:revenue/:roi', async (req, r
       'averageGrowthFreeCashFlowRates.10': { $gt: FCF },
       'averageGrowthRevenueRates.10': { $gt: revenue },
       'averageGrowthROIRates.10': { $gt: ROI },
-    })
-      .sort([
-        ['averageGrowthBVPSRates.10', 'desc'],
-        ['averageGrowthEPSRates.10', 'desc'],
-        ['averageGrowthFreeCashFlowRates.10', 'desc'],
-        ['averageGrowthRevenueRates.10', 'desc'],
-        ['averageGrowthROIRates.10', 'desc'],
-      ])
-      .skip(offset)
-      // .limit(limit);
-    console.log(companies.length);
+    }).sort([
+      ['averageGrowthBVPSRates.10', 'desc'],
+      ['averageGrowthEPSRates.10', 'desc'],
+      ['averageGrowthFreeCashFlowRates.10', 'desc'],
+      ['averageGrowthRevenueRates.10', 'desc'],
+      ['averageGrowthROIRates.10', 'desc'],
+    ]);
+
     const count = companies.length;
-    const pages = count / limit;
+    const pages = Math.ceil(count / limit);
 
     if (page > pages) {
       return res.json(`Page ${page} not found. There's only ${pages} pages.`);
     }
 
     const response = {
-      companies,
+      companies: companies.splice(offset, limit),
       count,
       currentPage: page,
       pages,

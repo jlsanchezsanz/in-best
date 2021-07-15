@@ -8,7 +8,7 @@ const Filters = ({ onChange, filters }) => {
   const getOptions = (filterValue) =>
     options.map((value) => {
       return (
-        <option key={`${filterValue}-${value}`} defaultValue={value === filterValue} value={value}>
+        <option key={`${filterValue}-${value}`} value={value}>
           {value}
         </option>
       );
@@ -21,6 +21,7 @@ const Filters = ({ onChange, filters }) => {
           <Form.Group controlId="filters.BVPS">
             <Form.Label>BVPS</Form.Label>
             <Form.Control
+              value={filters.BVPS}
               onChange={(e) => onChange({ BVPS: +e.target.value })}
               size="sm"
               as="select"
@@ -33,6 +34,7 @@ const Filters = ({ onChange, filters }) => {
           <Form.Group controlId="filters.EPS">
             <Form.Label>EPS</Form.Label>
             <Form.Control
+              value={filters.EPS}
               onChange={(e) => onChange({ EPS: +e.target.value })}
               size="sm"
               as="select"
@@ -45,6 +47,7 @@ const Filters = ({ onChange, filters }) => {
           <Form.Group controlId="filters.FCF">
             <Form.Label>FCF</Form.Label>
             <Form.Control
+              value={filters.FCF}
               onChange={(e) => onChange({ FCF: +e.target.value })}
               size="sm"
               as="select"
@@ -57,6 +60,7 @@ const Filters = ({ onChange, filters }) => {
           <Form.Group controlId="filters.Revenue">
             <Form.Label>Revenue</Form.Label>
             <Form.Control
+              value={filters.revenue}
               onChange={(e) => onChange({ revenue: +e.target.value })}
               size="sm"
               as="select"
@@ -69,6 +73,7 @@ const Filters = ({ onChange, filters }) => {
           <Form.Group controlId="filters.ROI">
             <Form.Label>ROI</Form.Label>
             <Form.Control
+              value={filters.ROI}
               onChange={(e) => onChange({ ROI: +e.target.value })}
               size="sm"
               as="select"

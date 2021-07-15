@@ -98,9 +98,9 @@ const CompaniesList = ({
           <Pagination.Item active>{currentPage}</Pagination.Item>
         )}
         {currentPage < pages - 1 && <Pagination.Ellipsis disabled />}
-        <Pagination.Item active={currentPage === pages} onClick={() => changePage(pages)}>
+        {pages > 1 && <Pagination.Item active={currentPage === pages} onClick={() => changePage(pages)}>
           {pages}
-        </Pagination.Item>
+        </Pagination.Item>}
         <Pagination.Next
           disabled={currentPage === pages}
           onClick={() => changePage(currentPage + 1)}
